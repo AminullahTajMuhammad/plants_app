@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'constants.dart';
+import 'item_details_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -172,82 +173,87 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget plantsListTile(String img, String name, String price, bool isFavourite, bool addToCart) {
-    return Container(
-      margin: const EdgeInsets.only(right: 20, top: 20),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-        color: Color(0xffE8E8E8),
-      ),
-      child: Stack(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 15),
-                  alignment: Alignment.center,
-                  child: Image.asset(img),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 15, top: 10),
-                  child: Text(
-                    name,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: GoogleFonts.roboto().fontFamily,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500
-                    ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => ItemDetailsPage()));
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 20, top: 20),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          color: Color(0xffE8E8E8),
+        ),
+        child: Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(top: 15),
+                    alignment: Alignment.center,
+                    child: Image.asset(img),
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 15, top: 5),
-                  child: Text(
-                    price,
-                    style: TextStyle(
+                  Container(
+                    margin: const EdgeInsets.only(left: 15, top: 10),
+                    child: Text(
+                      name,
+                      style: TextStyle(
                         color: Colors.black,
                         fontFamily: GoogleFonts.roboto().fontFamily,
-                        fontSize: 18,
+                        fontSize: 17,
                         fontWeight: FontWeight.w500
+                      ),
                     ),
                   ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 15, top: 5),
+                    child: Text(
+                      price,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: GoogleFonts.roboto().fontFamily,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Like Button
+            Positioned(
+              right: 1,
+              child: Container(
+                margin: const EdgeInsets.all(10),
+                child: SvgPicture.asset(
+                  isFavourite ? "assets/ic_like_selected.svg" : "assets/ic_like_unselected.svg",
                 ),
-              ],
-            ),
-          ),
-          // Like Button
-          Positioned(
-            right: 1,
-            child: Container(
-              margin: const EdgeInsets.all(10),
-              child: SvgPicture.asset(
-                isFavourite ? "assets/ic_like_selected.svg" : "assets/ic_like_unselected.svg",
               ),
             ),
-          ),
-          Positioned(
-            bottom: 1,
-            right: 1,
-            child: Container(
-              height: 20,
-              width: 20,
-              margin: const EdgeInsets.only(right: 10, bottom: 14),
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(4)),
-                color: addToCart ? Constants.PRIMARY_COLOR : Colors.grey,
+            Positioned(
+              bottom: 1,
+              right: 1,
+              child: Container(
+                height: 20,
+                width: 20,
+                margin: const EdgeInsets.only(right: 10, bottom: 14),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(4)),
+                  color: addToCart ? Constants.PRIMARY_COLOR : Colors.grey,
+                ),
+                child: const Icon(
+                  Icons.add,
+                  size: 16,
+                  color: Colors.white,
+                ),
               ),
-              child: const Icon(
-                Icons.add,
-                size: 16,
-                color: Colors.white,
-              ),
-            ),
-          )
-          // Cart Button
-        ],
+            )
+            // Cart Button
+          ],
+        ),
       ),
     );
   }
